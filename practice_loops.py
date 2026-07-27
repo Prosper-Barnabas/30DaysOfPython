@@ -2664,7 +2664,6 @@ print(spanish_official_countries)
 
 # medium
 # top 5 most populated
-print()
 country_populations_list = []
 for country in countries_data:
         country_populations = (country["name"], country['population'])
@@ -2673,7 +2672,7 @@ for country in countries_data:
 sorted_country_populations = sorted(country_populations_list, key=lambda x: x[1], reverse=True)
 
 top_5_data =  sorted_country_populations[:5]
-top_5_most_populated = [(name, f"{comma:,}") for name, comma in top_5_data]
+top_5_most_populated = [(name, f"{pop:,}") for name, pop in top_5_data] # helps add the commas to the integer.
 print(top_5_most_populated)
 
 # Total Global Population
@@ -2684,10 +2683,51 @@ for country in countries_data:
 print(sum_of_all_coutries_population)
 
 # language frequency counter
+languages = dict()
+for country in countries_data:
+    for country_lang in country["languages"]:
+        if country_lang not in languages:
+            languages[country_lang] = 1
+        else:
+            languages[country_lang] += 1
 
+languages_list = languages.items()
+sorted_languages_list = sorted(languages_list, key=lambda x: x[1], reverse=True)
+print(sorted_languages_list[:10])
 
 # currency frequency counter
+currency_dict = dict()
+for country in countries_data:
+    if country["currency"] not in currency_dict:
+        currency_dict[country["currency"]] = 1
+    else:
+        currency_dict[country["currency"]] += 1
+
+currency_list = currency_dict.items()
+sorted_currency_list = sorted(currency_list, key=lambda s: s[1], reverse=True)
+print(sorted_currency_list[:10])
 
 # average population per country
 mean_of_population = sum_of_all_coutries_population / len(countries_data)
 print(mean_of_population)
+
+# Hard
+# Most Multilingual Country
+lingual_countries_list = list()
+for country in countries_data:
+    lingual_countries = (country["name"], len(country["languages"]))
+    lingual_countries_list.append(lingual_countries)
+
+sorted_lingual_countries = sorted(lingual_countries_list, key=lambda c:c[1], reverse=True)
+print(sorted_lingual_countries[0]) # max(sorted_lingual_countries, key=lambda x: x[1])
+
+# Group Countries by Currency
+currency_map = {}
+for country in countries_data:
+    country_name = country["name"]
+    country_currency = country["currency"]
+    if country_currency not in currency_map:
+        currency_map[country_currency] = [country_name]
+    else:
+        currency_map[country_currency].append(country_name)
+print(currency_map)
