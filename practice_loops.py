@@ -2731,3 +2731,16 @@ for country in countries_data:
     else:
         currency_map[country_currency].append(country_name)
 print(currency_map)
+
+# Extract the TDL from the flag svg
+print()
+country_flag_code = {}
+for country in countries_data:
+    name = country["name"]
+    tdl = country["flag"].split("/")
+    flag_code = tdl[-1][:3]
+
+    if name not in country_flag_code:
+        country_flag_code[name] = flag_code
+
+print(country_flag_code)
