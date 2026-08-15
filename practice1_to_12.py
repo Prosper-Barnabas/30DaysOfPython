@@ -190,12 +190,10 @@ def calculate_cart_total(cart, promo_code=None):
 
         if promo_code == "SAVE20":
             g_total *= 0.8
-
-        if promo_code == "FREESHIP":
+        elif promo_code == "FREESHIP":
             g_total = total - 5
 
-    return f"{g_total:.2f}"
-
+        return round(max(0.00, g_total),2)
 print(calculate_cart_total(cart_1))
 print(calculate_cart_total(cart_2, "SAVE20"))
 print(calculate_cart_total(cart_3, "FREESHIP"))
