@@ -27,7 +27,7 @@ def sanitize_user_data(raw_users):
     for user in raw_users:
         user["email"] = user["email"].strip(" ").lower()
         user["interests"] = list(set(user["interests"]))
-        user["total_spent"] = sum(user["purchases"])
+        user["total_spent"] = round(sum(user["purchases"]), 2) # round to 2 decimal
         users_data.append(user)
     return users_data
 
@@ -82,6 +82,11 @@ def evaluate_request_permission(test_users):
         if user["user_profile"]["status"] == "banned":
             is_allowed = False
             status_message = "User is banned"
+
+        if user["user_profile"]["role"] == "admin":
+            is_allowed = True
+            status_message = "Admin tier active"
+            remaining_quota = "Unlimited"
         elif user["user_profile"]["role"] == "free":
             remaining_quota = 100 - user["current_requests"]
             if remaining_quota <= 0:
@@ -123,10 +128,7 @@ def audit_inventory(inventory_db):
     low_stock_items, out_of_stock = [], []
     total_stock_units = 0
 
-    for items in inventory_db.values():
-        product_name = items[0]
-        stock_count = items[1]
-        reorder_threshold = items[-1]
+    for product_name, stock_count, reorder_threshold in inventory_db.values():
 
         if stock_count <= reorder_threshold:
             low_stock_items.append(product_name)
@@ -134,12 +136,13 @@ def audit_inventory(inventory_db):
         if stock_count == 0:
             out_of_stock.append(product_name)
 
-        if product_name in low_stock_items and product_name in out_of_stock:
-            low_stock_items.remove(product_name)
-
         total_stock_units += int(stock_count)
 
-    return f"Low on stock items: {low_stock_items}.\nOut of stock items: {out_of_stock}.\nTotal stock count: {total_stock_units}."
+    return {
+        "low_stock_items": low_stock_items,
+        "out_of_stock": out_of_stock,
+        "total_stock_units": total_stock_units
+    }
 
 print(audit_inventory(inventory_db))
 
@@ -171,21 +174,22 @@ cart_3 = [
 
 def calculate_cart_total(cart, promo_code=None):
     sub_total_list = []
-    balance = 0
 
+    # sub_total = sum(price * qty for _, price, qty in cart)
     for cart_item in cart:
         price, qty = cart_item[1], cart_item[2]
         sub_total = price * qty
         sub_total_list.append(sub_total)
         total = sum(sub_total_list)
 
+        # g_total = sub_total * 0.90 if sub_total > 100 else sub_total
         if total > 100:
             g_total = total*0.9
         else:
             g_total = total
 
         if promo_code == "SAVE20":
-            g_total = g_total*0.8
+            g_total *= 0.8
 
         if promo_code == "FREESHIP":
             g_total = total - 5
