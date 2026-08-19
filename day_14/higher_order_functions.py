@@ -14,6 +14,11 @@ reduce function is a way to manipulate data to produce a result not an iterable.
 """
 
 # 2
+"""
+Higher order functions are functions that can take in a function as an argument.
+closure is nesting a function inside another function and then returning the inner function
+Decorators are a way to use a function to add more properties to another function.
+"""
 
 # 3
 # map
@@ -162,4 +167,15 @@ print(countries_by_population(COUNTRIES_DATA))
 # 2
 
 # 3
-def most_populated_countries
+def most_populated_countries(countries):
+    population_dict = {}
+
+    for country in countries:
+        if country["name"] not in population_dict:
+            population_dict[country["name"]] = country["population"]
+
+    sorted_most_populated_countries = sorted(population_dict.items(), key=lambda x: x[1], reverse=True)[:10]
+    sorted_10_most_populated_countries = [(name, f"{pop:,}") for name, pop in sorted_most_populated_countries]
+    return sorted_10_most_populated_countries
+
+print(most_populated_countries(COUNTRIES_DATA))
