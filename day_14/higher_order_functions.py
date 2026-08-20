@@ -1,5 +1,9 @@
 # Exercises: Day 14
+import sys
+sys.path.append("../data")
+
 from functools import reduce
+
 countries = ['Estonia', 'Finland', 'Sweden', 'Denmark', 'Norway', 'Iceland']
 names = ['Asabeneh', 'Lidiya', 'Ermias', 'Abraham']
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -79,7 +83,8 @@ countries_starting_with_E = filter(lambda x: x.startswith('E'), countries)
 print(list(countries_starting_with_E))
 
 # 8
-
+countries_uppercase = map(lambda x: x.capitalize(), filter(lambda x: 'land' not in x, countries))
+print(list(countries_uppercase))
 
 # 9
 lst = ['numbers', 1, 4, 5, 'joure']
@@ -95,18 +100,19 @@ north_european_countries = reduce(lambda x, y: f"{x}, {y}", countries)
 print(north_european_countries + " are north European countries")
 
 # 12
-from countries import COUNTRIES
+from countries import countries
+
 # countries that contains 'land'
-countries_that_contains_land = filter(lambda x: 'land' in x, COUNTRIES)
+countries_that_contains_land = filter(lambda x: 'land' in x, countries)
 print(list(countries_that_contains_land))
 # countries that contains 'ia'
-countries_that_contains_ia = filter(lambda x: 'ia' in x, COUNTRIES)
+countries_that_contains_ia = filter(lambda x: 'ia' in x, countries)
 print(list(countries_that_contains_ia))
 # countries that contains 'island'
-countries_that_contains_island = filter(lambda x: 'Island' in x, COUNTRIES)
+countries_that_contains_island = filter(lambda x: 'Island' in x, countries)
 print(list(countries_that_contains_island))
 # countries that contains 'stan'
-countries_that_contains_stan = filter(lambda x: 'stan' in x, COUNTRIES)
+countries_that_contains_stan = filter(lambda x: 'stan' in x, countries)
 print(list(countries_that_contains_stan))
 
 # 13
@@ -119,23 +125,23 @@ def letters_of_countries(countries):
             letter_dict[country[0]] += 1
     return letter_dict
 
-print(letters_of_countries(COUNTRIES))
+print(letters_of_countries(countries))
 
 # 14
 def get_first_ten_countries(countries):
     return countries[:10]
 
-print(get_first_ten_countries(COUNTRIES))
+print(get_first_ten_countries(countries))
 
 # 15
 def get_last_ten_countries(countries):
     return countries[-10:]
 
-print(get_last_ten_countries(COUNTRIES))
+print(get_last_ten_countries(countries))
 
 # Exercises: Level 3
 # 1
-from countries_data import COUNTRIES_DATA
+from countries_data import countries_data
 
 def countries_by_name(countries):
     countries_by_name_lst = []
@@ -144,7 +150,7 @@ def countries_by_name(countries):
 
     return countries_by_name_lst
 
-print(countries_by_name(COUNTRIES_DATA))
+print(countries_by_name(countries_data))
 
 def countries_by_capital(countries):
     countries_by_capital_lst = []
@@ -153,7 +159,7 @@ def countries_by_capital(countries):
 
     return countries_by_capital_lst
 
-print(countries_by_capital(COUNTRIES_DATA))
+print(countries_by_capital(countries_data))
 
 def countries_by_population(countries):
     countries_by_population_lst = []
@@ -162,11 +168,21 @@ def countries_by_population(countries):
 
     return countries_by_population_lst
 
-print(countries_by_population(COUNTRIES_DATA))
+print(countries_by_population(countries_data))
 
-# 2
+def languages_by_location(countries):
+    language_dict = {}
 
-# 3
+    for country in countries:
+        for language in country['languages']:
+            if language not in language_dict:
+                language_dict[language] = 1
+            else:
+                language_dict[language] += 1
+    return language_dict
+
+print(languages_by_location(countries_data))
+
 def most_populated_countries(countries):
     population_dict = {}
 
@@ -178,4 +194,4 @@ def most_populated_countries(countries):
     sorted_10_most_populated_countries = [(name, f"{pop:,}") for name, pop in sorted_most_populated_countries]
     return sorted_10_most_populated_countries
 
-print(most_populated_countries(COUNTRIES_DATA))
+print(most_populated_countries(countries_data))
