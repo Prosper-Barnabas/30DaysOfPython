@@ -88,32 +88,29 @@ print(list(countries_uppercase))
 
 # 9
 lst = ['numbers', 1, 4, 5, 'joure']
-get_string_lists = filter(lambda x: type(x) == str, lst)
-print(list(get_string_lists))
+def get_string_lists(lst):
+    return list(filter(lambda item: isinstance(item, str), lst))
+
+print(get_string_lists(lst))
 
 # 10
 sum_of_all_nums = reduce(lambda x, y: x + y, numbers)
 print(sum_of_all_nums)
 
 # 11
-north_european_countries = reduce(lambda x, y: f"{x}, {y}", countries)
+north_european_countries = reduce(lambda x, y: f"{x}, and {y}" if y == countries[-1] else f"{x}, {y}", countries)
 print(north_european_countries + " are north European countries")
 
 # 12
 from countries import countries
 
-# countries that contains 'land'
-countries_that_contains_land = filter(lambda x: 'land' in x, countries)
-print(list(countries_that_contains_land))
-# countries that contains 'ia'
-countries_that_contains_ia = filter(lambda x: 'ia' in x, countries)
-print(list(countries_that_contains_ia))
-# countries that contains 'island'
-countries_that_contains_island = filter(lambda x: 'Island' in x, countries)
-print(list(countries_that_contains_island))
-# countries that contains 'stan'
-countries_that_contains_stan = filter(lambda x: 'stan' in x, countries)
-print(list(countries_that_contains_stan))
+def categorize_countries(pattern, countries):
+    return list(filter(lambda x: pattern in x, countries))
+
+print(categorize_countries('land', countries))
+print(categorize_countries('ia', countries))
+print(categorize_countries('Island', countries))
+print(categorize_countries('stan', countries))
 
 # 13
 def letters_of_countries(countries):
@@ -174,12 +171,11 @@ def languages_by_location(countries):
     language_dict = {}
 
     for country in countries:
-        for language in country['languages']:
-            if language not in language_dict:
-                language_dict[language] = 1
-            else:
-                language_dict[language] += 1
-    return language_dict
+        for language in country.get("languages", []):
+            language_dict[language] = language_dict.get(language, 0) + 1
+
+    return [{lang: n} for lang, n in sorted(language_dict.items(), key=lambda item: item[1], reverse=True)][:10]
+
 
 print(languages_by_location(countries_data))
 
