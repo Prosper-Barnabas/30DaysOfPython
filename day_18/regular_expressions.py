@@ -8,15 +8,13 @@ paragraph = 'I love teaching. If you do not love teaching what else can you love
 
 frequency_counter = {}
 for word in re.split(' ', paragraph.replace('.', '')):
-    if word not in frequency_counter:
-        frequency_counter[word] = 1
-    else:
-        frequency_counter[word] += 1
+    frequency_counter[word] = frequency_counter.get(word, 0) + 1
 
-frequency_list = sorted(frequency_counter.items(), key=lambda x: x[1], reverse=True)
+frequency_list = [(count, word) for word, count in frequency_counter.items()]
+frequency_list.sort(key=lambda x: x[0], reverse=True)
 
 print(frequency_list)
-print(f"The most frequent word is {frequency_list[0][0]} with a frequency of {frequency_list[0][1]}")
+print(f"The most frequent word is {frequency_list[0][1]} with a frequency of {frequency_list[0][0]}")
 
 # 2
 points = ['-12', '-4', '-3', '-1', '0', '4', '8']
@@ -26,10 +24,7 @@ print(distance)
 # Exercises: Level 2
 # 1
 def is_valid_variable(text):
-    regex = r'^[A-Za-z_][A-Za-z0-9_]*$'
-    if re.match(regex, text):
-        return True
-    return False
+    return bool(re.match(r'^[A-Za-z_][A-Za-z0-9_]*$', text))
 
 print(is_valid_variable('first_name')) # True
 print(is_valid_variable('first-name')) # False
@@ -51,11 +46,9 @@ print(cleaned_text)
 def most_frequent_words(cleaned_text):
     frequency_count = {}
     for word in re.split(' ', cleaned_text):
-        if word not in frequency_count:
-            frequency_count[word] = 1
-        else:
-            frequency_count[word] += 1
+        frequency_count[word] = frequency_count.get(word, 0) + 1
 
-    sorted_most_frequent = sorted(frequency_count.items(), key=lambda x:x[1], reverse=True)[:3]
-    return sorted_most_frequent;
+    sorted_most_frequent = sorted([(count, word) for word, count in frequency_count.items()], key=lambda x:x[0], reverse=True)[:3]
+    return sorted_most_frequent
+
 print(most_frequent_words(cleaned_text))
