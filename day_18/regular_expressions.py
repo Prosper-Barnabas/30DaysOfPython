@@ -29,8 +29,24 @@ print(distance)
 
 # Exercises: Level 3
 # 1
-# sentence = '''%I $am@% a %tea@cher%, &and& I lo%#ve %tea@ching%;. There $is nothing; &as& mo@re rewarding as educa@ting &and& @emp%o@wering peo@ple. ;I found tea@ching m%o@re interesting tha@n any other %jo@bs. %Do@es thi%s mo@tivate yo@u to be a tea@cher!?'''
+sentence = '''%I $am@% a %tea@cher%, &and& I lo%#ve %tea@ching%;. There $is nothing; &as& mo@re rewarding as educa@ting &and& @emp%o@wering peo@ple. ;I found tea@ching m%o@re interesting tha@n any other %jo@bs. %Do@es thi%s mo@tivate yo@u to be a tea@cher!?'''
 
-# reg_pattern = r'[^A-Za-z0-9]'
-# cleaned_sentence = re.sub('@', '', sentence, re.I)
-# print(cleaned_sentence)
+reg_pattern = r'[^A-Za-z0-9 ]'
+def clean_text(sentence):
+    return re.sub(reg_pattern, '', sentence)
+
+cleaned_text = clean_text(sentence)
+# print(clean_text(sentence))
+print(cleaned_text)
+
+def most_frequent_words(cleaned_text):
+    frequency_count = {}
+    for word in re.split(' ', cleaned_text):
+        if word not in frequency_count:
+            frequency_count[word] = 1
+        else:
+            frequency_count[word] += 1
+
+    sorted_most_frequent = sorted(frequency_count.items(), key=lambda x:x[1], reverse=True)[:3]
+    return sorted_most_frequent;
+print(most_frequent_words(cleaned_text))
