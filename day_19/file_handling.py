@@ -32,3 +32,20 @@ def most_spoken_languages(filename, limit=10):
         return sorted_languages
 
 print(most_spoken_languages(filename='../data/countries_data.json', limit=3))
+
+# 3
+def most_populated_countries(filename, limit=10):
+    with open(filename, 'r', encoding='utf-8') as file:
+        countries_data = json.load(file)
+        population_dict = {}
+
+        for country in countries_data:
+            name = country["name"]
+            population = country["population"]
+            population_dict[name] = population
+
+        sort_population = sorted(population_dict.items(), key=lambda x: x[1], reverse=True)
+        sorted_population = [{'country': name, 'population': f"{add:,}"} for name, add in  sort_population][:limit]
+        return sorted_population
+
+print(most_populated_countries(filename='../data/countries_data.json'))
