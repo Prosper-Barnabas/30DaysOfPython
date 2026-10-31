@@ -134,12 +134,7 @@ ages = [
     26,
 ]
 data = Statistics(ages)
-try:
-    data = Statistics([])
-except ValueError as error:
-    print(f"Invalid data: {error}")
-else:
-    print(data.describe())
+print(data.describe())
 
 
 # Exercise: Level 2
