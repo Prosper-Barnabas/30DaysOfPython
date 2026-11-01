@@ -14,10 +14,7 @@ class Statistics:
     def sum(self):
         if not self.num_list:
             raise ValueError("Cannot calculate the sum")
-        sum_of_nums = 0
-        for num in self.num_list:
-            sum_of_nums += num
-        return sum_of_nums
+        return sum(self.num_list)
 
     def min(self):
         if not self.num_list:
@@ -43,12 +40,11 @@ class Statistics:
     def median(self):
         if not self.num_list:
             raise ValueError("Cannot calculate the median")
-        n = self.count()
-        sorted_list = sorted(self.num_list)
-        if n % 2 == 0:
-            median_position = ((n / 2) + (n / 2 + 1)) // 2
-        median_position = (n + 1) // 2
-        return sorted_list[median_position - 1]
+        middle = self.count() // 2
+        values = sorted(self.num_list)
+        if len(values) % 2 == 0:
+            return (values[middle - 1] + values[middle]) / 2
+        return values[middle]
 
     def mode(self):
         if not self.num_list:
@@ -154,7 +150,7 @@ class PersonAccount:
 
     def account_info(self) -> None:
         print(
-            f"\n\nAccount Summary .....\n"
+            f"\n\n------- Account Summary ------- \n"
             f"Account Name: {self.firstname} {self.lastname}\n"
             f"Total Income: {self.total_income():.2f}\n"
             f"Total Expenses: {self.total_expenses():.2f}\n"
