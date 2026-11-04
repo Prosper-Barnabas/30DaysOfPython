@@ -76,7 +76,7 @@ def extract_emails(filepath: str) -> list[str]:
 print(extract_emails("../data/email_exchanges_big.txt"))
 
 # 2
- def find_most_common_words(filepath: str, num_of_words: int) -> list[tuple]:
+def find_most_common_words(filepath: str, num_of_words: int) -> list[tuple]:
     words_dict = {}
     with open(filepath, "r", encoding="utf-8") as file:
         text = file.read()
@@ -91,17 +91,17 @@ print(extract_emails("../data/email_exchanges_big.txt"))
 
 
 # 3
- print(find_most_common_words("../data/obama_speech.txt", 10))
- print(find_most_common_words("../data/michelle_obama_speech.txt", 10))
- print(find_most_common_words("../data/donald_speech.txt", 10))
- print(find_most_common_words("../data/melina_trump_speech.txt", 10))
+print(find_most_common_words("../data/obama_speech.txt", 10))
+print(find_most_common_words("../data/michelle_obama_speech.txt", 10))
+print(find_most_common_words("../data/donald_speech.txt", 10))
+print(find_most_common_words("../data/melina_trump_speech.txt", 10))
 
 
 # 4
 
 
 # 5
- def most_repeated_words(filepath: str, limit: int):
+def most_repeated_words(filepath: str, limit: int):
     word_dict = {}
     with open(filepath, "r", encoding="utf-8") as file:
         text = file.read()
@@ -115,6 +115,6 @@ print(extract_emails("../data/email_exchanges_big.txt"))
     ]
 
 
- print(most_repeated_words("../data/romeo_and_juliet.txt", 10))
+print(most_repeated_words("../data/romeo_and_juliet.txt", 10))
 
 # 6
