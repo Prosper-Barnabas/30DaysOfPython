@@ -65,10 +65,18 @@ print(most_populated_countries(filename="../data/countries_data.json"))
 
 # Exercises: Level 2
 # 1
+def extract_emails(filepath: str) -> list[str]:
+    with open(filepath, "r", encoding="utf-8") as file:
+        text: str = file.read()
 
+    all_emails = re.findall(r"[\w\.-]+@[A-Za-z0-9]+\.[A-Za-z]+", text)
+    return all_emails
+
+
+print(extract_emails("../data/email_exchanges_big.txt"))
 
 # 2
-def find_most_common_words(filepath: str, num_of_words: int) -> list[tuple]:
+ def find_most_common_words(filepath: str, num_of_words: int) -> list[tuple]:
     words_dict = {}
     with open(filepath, "r", encoding="utf-8") as file:
         text = file.read()
@@ -83,18 +91,17 @@ def find_most_common_words(filepath: str, num_of_words: int) -> list[tuple]:
 
 
 # 3
-print(find_most_common_words("../data/obama_speech.txt", 10))
-print(find_most_common_words("../data/michelle_obama_speech.txt", 10))
-print(find_most_common_words("../data/donald_speech.txt", 10))
-print(find_most_common_words("../data/melina_trump_speech.txt", 10))
+ print(find_most_common_words("../data/obama_speech.txt", 10))
+ print(find_most_common_words("../data/michelle_obama_speech.txt", 10))
+ print(find_most_common_words("../data/donald_speech.txt", 10))
+ print(find_most_common_words("../data/melina_trump_speech.txt", 10))
 
 
 # 4
-print()
 
 
 # 5
-def most_repeated_words(filepath: str, limit: int):
+ def most_repeated_words(filepath: str, limit: int):
     word_dict = {}
     with open(filepath, "r", encoding="utf-8") as file:
         text = file.read()
@@ -108,6 +115,6 @@ def most_repeated_words(filepath: str, limit: int):
     ]
 
 
-print(most_repeated_words("../data/romeo_and_juliet.txt", 10))
+ print(most_repeated_words("../data/romeo_and_juliet.txt", 10))
 
 # 6
